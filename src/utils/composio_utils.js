@@ -1,36 +1,6 @@
 import { auth } from "../config/firebase";
 import axios from "axios";
 
-// const initiateTwitterConnectionAndConnectAdmin = async (user, setTwitterAccountLoading = null) => {
-//     try {
-//         if (setTwitterAccountLoading) setTwitterAccountLoading(true);
-//         const idToken = await auth.currentUser.getIdToken(true);
-//         const data = {
-//             username: user,
-//             redirectUrl: window.location.href
-//         };
-//         const newIntegrationURL = import.meta.env.VITE_BACKEND_URL + "/newintegration"
-//         const response = await axios.post(newIntegrationURL, data, {
-//             headers: {
-//                 'Authorization': `Bearer ${idToken}`,
-//                 'Content-Type': 'application/json'
-//             }
-//         });
-//         if (response.data.authenticated === "yes") {
-//             alert(response.data.message);
-//         } else if (response.data.authenticated === "no") {
-//             if (!setTwitterAccountLoading) {
-//                 return response.data.url;
-//             }
-//             window.open(response.data.url, '_blank');
-//         }
-//     } catch (error) {
-//         console.error('Error sending data:', error);
-//     } finally {
-//         if (setTwitterAccountLoading) setTwitterAccountLoading(false);
-//     }
-// }
-
 const linkAccount = async (user, appName) => {
     try {
         const idToken = await auth.currentUser.getIdToken(true);
