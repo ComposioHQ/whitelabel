@@ -27,25 +27,26 @@ const linkAccount = async (user, appName) => {
     }
 }
 
-const linkAccountViaAPI = async (user, appName) => {
+const linkShopifyAccount = async (user, admin_api_access_token, shopSubDomain, appName) => {
     try {
         const idToken = await auth.currentUser.getIdToken(true);
         const data = {
             newUserId: user,
-            redirectUrl: window.location.href,
+            admin_api_access_token: admin_api_access_token,
+            shopSubDomain: shopSubDomain,
             appName: appName
         };
-        const newEntityURL = "/api/newentity"
+        const newEntityURL = "/api/newentityviaapi"
         const response = await axios.post(newEntityURL, data, {
             headers: {
                 'Authorization': `Bearer ${idToken}`,
                 'Content-Type': 'application/json'
             }
         });
-        if (response.data.authenticated === "yes") {
-            alert(response.data.message);
-        } else if (response.data.authenticated === "no") {
-            return response.data.url;
+        if (response.data.authenticated === true) {
+            return true;
+        } else if (response.data.authenticated === false) {
+            return false;
         }
     } catch (error) {
         console.error("Full error object:", error);
@@ -143,5 +144,24 @@ const createClickupSpace = async (entityId, workspaceId) => {
     }
 };
 
+const getShopifyDetails = async (entityId) => {
+    try {
+        const token = await auth.currentUser.getIdToken();
+        const response = await axios.post("/api/getshopifydetails",
+            { entity_id: entityId },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+            }
+        );
+        return response.data.message;
+    } catch (error) {
+        console.error("Error getting Shopify details:", error);
+        throw error;
+    }
+};
 
-export { checkConnectionStatus, linkAccount, createNewTweet, starGithubRepo, createClickupSpace };
+
+export { checkConnectionStatus, linkAccount, createNewTweet, starGithubRepo, createClickupSpace, linkShopifyAccount, getShopifyDetails };
