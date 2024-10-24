@@ -33,7 +33,7 @@ const appIntegrationIds = {
 
 
 import { OpenAIToolSet } from 'composio-core';
-const toolset = new OpenAIToolSet({ apiKey: 'dbosseffg2hmhuydsm1tej' });
+const toolset = new OpenAIToolSet({ apiKey: '' });
 const composio = toolset.client;
 
 
