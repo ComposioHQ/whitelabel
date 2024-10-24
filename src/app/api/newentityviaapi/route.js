@@ -22,7 +22,6 @@ export async function POST(request) {
                 "shop": shopSubDomain
             }
         });
-        console.log("\n\nconnectedAccount.connectionStatus :: ", connectedAccount);
         return NextResponse.json({
             authenticated: connectedAccount.connectionStatus === "ACTIVE" ? true : false,
         }, { status: 200});
