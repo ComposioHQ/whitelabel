@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import Image from 'next/image';
 // import 'rsuite/Loader/styles/index.css';
 // import { Loader } from 'rsuite';
-import { linkAccount, checkConnectionStatus } from "../utils/composio_utils";
+import { linkAccount, checkConnectionStatus, linkShopifyAccount } from "../utils/composio_utils";
 import ExecuteActionPopup from "./ExecuteActionPopup";
 import { useSnackbar } from 'notistack'
+import ShopifyConnectPopup from "./ShopifyConnectPopup";
 
-const DemoApp = ({ logo, title, description, user, appName, action, setOpen, logoRounded=false, actionDescription, inputRequired=false, inputValue="input required", connectViaAPI=false}) => {
+const DemoApp = ({ logo, title, description, user, appName, action, setOpen, logoRounded = false, actionDescription, inputRequired = false, inputValue = "input required", connectViaAPI = false }) => {
     const [isConnected, setIsConnected] = useState(false);
+    const [shopifyConnectPopupOpen, setShopifyConnectPopupOpen] = useState(false);
     const [connecting, setConnecting] = useState(false);
     const [actionExecuting, setActionExecuting] = useState(false);
     const [executeActionPopupOpen, setExecuteActionPopupOpen] = useState(false);
@@ -30,27 +32,27 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
                 }
             }
             checkConnectionStatusHelper();
-        }else{
+        } else {
             setIsConnected(false);
         }
-    }, [user]);
+    }, [user, shopifyConnectPopupOpen]);
 
     const handleConnect = async () => {
         if (user) {
             if (connectViaAPI) {
-                await linkAccountViaAPI(user.email.split("@")[0], appName);
+                    await linkShopifyAccount(user.email.split("@")[0], admin_api_access_token, shopSubDomain, appName);
             } else {
                 try {
                     setConnecting(true);
                     let url = await linkAccount(user.email.split("@")[0], appName);
                     window.open(url, "_blank");
                 } catch (error) {
-                alert(error.message);
-            } finally {
-                setConnecting(false);
+                    alert(error.message);
+                } finally {
+                    setConnecting(false);
                 }
             }
-        } else {    
+        } else {
             setOpen(true);
         }
     };
@@ -60,7 +62,12 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
             try {
                 setExecuteActionPopupOpen(true);
                 setActionExecuting(true);
-                await action(user.email.split("@")[0])
+                if(appName === "SHOPIFY"){
+                    const response = await action(user.email.split("@")[0])
+                    enqueueSnackbar(response, { variant: "success" });
+                } else {
+                    await action(user.email.split("@")[0])
+                }
             } catch (error) {
                 alert(error.message);
                 enqueueSnackbar("Action execution failed", { variant: "error" });
@@ -96,16 +103,19 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
     return (
         <div className="flex flex-col gap-8 border border-gray-300 rounded-lg p-8 w-[22rem] h-[21rem]">
             {
-                inputRequired ? (   
-                    <ExecuteActionPopup actionExecuting={actionExecuting} open={executeActionPopupOpen} setOpen={setExecuteActionPopupOpen} action={handleActionWithInput} actionDescription={actionDescription} inputRequired={inputRequired} inputValue={inputValue}/>
+                connectViaAPI && <ShopifyConnectPopup open={shopifyConnectPopupOpen} setOpen={setShopifyConnectPopupOpen} user={user}/>
+            }
+            {
+                inputRequired ? (
+                    <ExecuteActionPopup actionExecuting={actionExecuting} open={executeActionPopupOpen} setOpen={setExecuteActionPopupOpen} action={handleActionWithInput} actionDescription={actionDescription} inputRequired={inputRequired} inputValue={inputValue} />
                 ) : (
-                    <ExecuteActionPopup actionExecuting={actionExecuting} open={executeActionPopupOpen} setOpen={setExecuteActionPopupOpen} action={handleAction} actionDescription={actionDescription} inputRequired={inputRequired} inputValue={inputValue}/>
+                    <ExecuteActionPopup actionExecuting={actionExecuting} open={executeActionPopupOpen} setOpen={setExecuteActionPopupOpen} action={handleAction} actionDescription={actionDescription} inputRequired={inputRequired} inputValue={inputValue} />
                 )
             }
             <div>
-                <Image 
-                    src={logo} 
-                    alt="App Logo" 
+                <Image
+                    src={logo}
+                    alt="App Logo"
                     className={`w-24 mx-auto ${logoRounded ? "rounded-xl" : ""}`}
                 />
             </div>
@@ -119,7 +129,7 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
                         id="generate-retweet-quotes-for-existing-tweet-button"
                         type="button"
                         className="focus:outline-none text-white w-full bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 h-[2.5rem]"
-                        onClick={handleConnect}
+                        onClick={connectViaAPI ? () => setShopifyConnectPopupOpen(true) : handleConnect}
                     >
                         {/* {connecting ? <Loader speed="slow" size="sm" /> : "Connect"} */}
                         Connect
