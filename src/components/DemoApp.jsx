@@ -12,7 +12,7 @@ import { driver } from "driver.js";
 import 'driver.js/dist/driver.css'
 
 
-const DemoApp = ({ logo, title, description, user, appName, action, setOpen, logoRounded = false, actionDescription, inputRequired = false, inputValue = "input required", connectViaAPI = false, demoApp = false, actionExecutedMessage="" }) => {
+const DemoApp = ({ logo, title, description, user, appName, action, setOpen, logoRounded = false, actionDescription, inputRequired = false, inputValue = "input required", connectViaAPI = false, demoApp = false, actionExecutedMessage = "" }) => {
     const [isConnected, setIsConnected] = useState(false);
     const [handleDriverDemoLoggedOut, setHandleDriverDemoLoggedOut] = useState(null);
     const [shopifyConnectPopupOpen, setShopifyConnectPopupOpen] = useState(false);
@@ -28,7 +28,7 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
         // setHandleDriverDemoLoggedOut(() => drive); 
         if (!user) {
             driver(driverObjDemoLoggedOut).drive();
-        } else{
+        } else {
             driver(driverObjDemoLoggedIn).drive();
         }
     }, [user]);
@@ -40,8 +40,8 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
                     setConnecting(true);
                     const authenticated = await checkConnectionStatus(appName, setIsConnected, user.email.split("@")[0]);
                     if (authenticated === "yes") {
-                        setIsConnected(true);  
-                    } 
+                        setIsConnected(true);
+                    }
                 } catch (error) {
                     alert(error.message);
                 } finally {
@@ -69,6 +69,15 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
                     setConnecting(false);
                 }
             }
+        } else {
+            setOpen(true);
+        }
+    };
+
+    const handleConnectViaAPI = async () => {
+        console.log("\n\nhandleConnectViaAPI");
+        if (user) {
+            setShopifyConnectPopupOpen(true);
         } else {
             setOpen(true);
         }
@@ -145,13 +154,13 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
                         id={demoApp ? "connect-accounts-button" : ""}
                         type="button"
                         className="flex mx-auto justify-center items-center focus:outline-none text-white w-full bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 h-[2.5rem]"
-                        onClick={connectViaAPI ? () => setShopifyConnectPopupOpen(true) : handleConnect}
+                        onClick={connectViaAPI ? () => handleConnectViaAPI() : handleConnect}
                     >
                         {connecting ? <MoonLoader color={"#ffffff"} loading={true} size={16} /> : "Connect"}
                     </button>
                 ) : (
                     <button
-                        id={demoApp ? "execute-action-button" : ""} 
+                        id={demoApp ? "execute-action-button" : ""}
                         type="button"
                         className="focus:outline-none text-white w-full bg-green-600 hover:bg-green-800 font-medium rounded-lg text-sm px-5 h-[2.5rem]"
                         onClick={() => setExecuteActionPopupOpen(true)}
