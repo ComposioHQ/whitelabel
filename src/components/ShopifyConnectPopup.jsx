@@ -1,15 +1,16 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Description } from '@headlessui/react'
-// import 'rsuite/Loader/styles/index.css';
-// import { Loader } from 'rsuite';
 import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import { linkShopifyAccount } from '../utils/composio_utils';
+import MoonLoader from "react-spinners/MoonLoader";
 
 export default function ShopifyConnectPopup({ open, setOpen, user }) {
     const [admin_api_access_token, setAdminApiAccessToken] = useState("");
     const [shopify_domain, setShopifyDomain] = useState("");
+    const [connecting, setConnecting] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const handleConnect = async () => {
+        setConnecting(true);
         if (admin_api_access_token === "" || shopify_domain === "") {
             enqueueSnackbar("Please enter all the details", { variant: "error" });
             return;
@@ -21,6 +22,7 @@ export default function ShopifyConnectPopup({ open, setOpen, user }) {
             enqueueSnackbar("Failed to connect account", { variant: "error" });
         }
         setOpen(false);
+        setConnecting(false);
     }
     return (
         <Dialog open={open} onClose={setOpen} className="relative z-20">
@@ -78,8 +80,7 @@ export default function ShopifyConnectPopup({ open, setOpen, user }) {
                                 onClick={handleConnect}
                                 className="w-20 bg-purple-700 hover:bg-purple-800 inline-flex justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
                             >
-                                {/* {actionExecuting ? <Loader speed="slow" size="sm" /> : "Proceed"} */}
-                                Connect
+                                {connecting ? <MoonLoader color={"#ffffff"} loading={true} size={16} /> : "Proceed"}
                             </button>
                         </div>
                     </DialogPanel>

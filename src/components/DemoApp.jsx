@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import Image from 'next/image';
-// import 'rsuite/Loader/styles/index.css';
-// import { Loader } from 'rsuite';
 import { linkAccount, checkConnectionStatus, linkShopifyAccount } from "../utils/composio_utils";
 import ExecuteActionPopup from "./ExecuteActionPopup";
 import { useSnackbar } from 'notistack'
 import ShopifyConnectPopup from "./ShopifyConnectPopup";
+import MoonLoader from "react-spinners/MoonLoader";
 
 const DemoApp = ({ logo, title, description, user, appName, action, setOpen, logoRounded = false, actionDescription, inputRequired = false, inputValue = "input required", connectViaAPI = false }) => {
     const [isConnected, setIsConnected] = useState(false);
@@ -40,7 +39,7 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
     const handleConnect = async () => {
         if (user) {
             if (connectViaAPI) {
-                    await linkShopifyAccount(user.email.split("@")[0], admin_api_access_token, shopSubDomain, appName);
+                await linkShopifyAccount(user.email.split("@")[0], admin_api_access_token, shopSubDomain, appName);
             } else {
                 try {
                     setConnecting(true);
@@ -62,7 +61,7 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
             try {
                 setExecuteActionPopupOpen(true);
                 setActionExecuting(true);
-                if(appName === "SHOPIFY"){
+                if (appName === "SHOPIFY") {
                     const response = await action(user.email.split("@")[0])
                     enqueueSnackbar(response, { variant: "success" });
                 } else {
@@ -103,7 +102,7 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
     return (
         <div className="flex flex-col gap-8 border border-gray-300 rounded-lg p-8 w-[22rem] h-[21rem]">
             {
-                connectViaAPI && <ShopifyConnectPopup open={shopifyConnectPopupOpen} setOpen={setShopifyConnectPopupOpen} user={user}/>
+                connectViaAPI && <ShopifyConnectPopup open={shopifyConnectPopupOpen} setOpen={setShopifyConnectPopupOpen} user={user} />
             }
             {
                 inputRequired ? (
@@ -128,11 +127,10 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
                     <button
                         id="generate-retweet-quotes-for-existing-tweet-button"
                         type="button"
-                        className="focus:outline-none text-white w-full bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 h-[2.5rem]"
+                        className="flex mx-auto justify-center items-center focus:outline-none text-white w-full bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 h-[2.5rem]"
                         onClick={connectViaAPI ? () => setShopifyConnectPopupOpen(true) : handleConnect}
                     >
-                        {/* {connecting ? <Loader speed="slow" size="sm" /> : "Connect"} */}
-                        Connect
+                        {connecting ? <MoonLoader color={"#ffffff"} loading={true} size={16} /> : "Connect"}
                     </button>
                 ) : (
                     <button
@@ -141,7 +139,7 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
                         className="focus:outline-none text-white w-full bg-green-600 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 h-[2.5rem]"
                         onClick={() => setExecuteActionPopupOpen(true)}
                     >
-                        {/* {actionExecuting ? <Loader speed="slow" size="sm" /> : "Perform Action"} */}
+                        {/* {actionExecuting ? <MoonLoader color={"#ffffff"} loading={true} size={16} /> : "Perform Action"} */}
                         Perform Action
                     </button>
                 )}

@@ -1,8 +1,7 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Description } from '@headlessui/react'
-// import 'rsuite/Loader/styles/index.css';
-// import { Loader } from 'rsuite';
 import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
+import MoonLoader from "react-spinners/MoonLoader";
 
 export default function ExecuteActionPopup({ open, setOpen, action, actionDescription, actionExecuting, inputRequired, inputValue }) {
     const [value, setValue] = useState("");
@@ -70,8 +69,7 @@ export default function ExecuteActionPopup({ open, setOpen, action, actionDescri
                                 onClick={inputRequired ? () => actionWithInput() : action}
                                 className="w-20 bg-purple-700 hover:bg-purple-800 inline-flex justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
                             >
-                                {/* {actionExecuting ? <Loader speed="slow" size="sm" /> : "Proceed"} */}
-                                Proceed
+                                {actionExecuting ? <MoonLoader color={"#ffffff"} loading={true} size={16} /> : "Proceed"}
                             </button>
                         </div>
                     </DialogPanel>
