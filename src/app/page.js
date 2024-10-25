@@ -51,13 +51,13 @@ export default function Home() {
     return <SkeletonLoader />
   }
   return (
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider maxSnack={3} id="main-container">
       {/* <ResponsiveMessage /> */}
       <Navbar user={user}/>
       <div className="h-screen">
         <LoginAlert open={open} setOpen={setOpen} action={initiateLogin} />
         <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-14 items-center justify-center 2xl:mx-36 xl:mx-24 md:mx-14 mt-32">
-          <DemoApp actionDescription="This action will create a tweet saying 'Hey! I used @composiohq to create this tweet' from connected account." setOpen={setOpen} user={user} appName="TWITTER" logo={twitterLogo} title="Create Simple Tweet App" description="Uses Twitter Tool to create a tweet from connected account" action={createNewTweet} />
+          <DemoApp actionDescription="This action will create a tweet saying 'Hey! I used @composiohq to create this tweet' from connected account." setOpen={setOpen} user={user} appName="TWITTER" logo={twitterLogo} title="Create Simple Tweet App" description="Uses Twitter Tool to create a tweet from connected account" action={createNewTweet} demoApp={true} />
           <DemoApp actionDescription="This action will star the composioHQ/composio repository from connected account" setOpen={setOpen} user={user} appName="GITHUB" logo={githubLogo} title="Star a repo on Github" description="Uses Github Tool to star a repo from connected account" action={starGithubRepo} />
           {/* <DemoApp actionDescription="This action will create a new space in Clickup from connected account" setOpen={setOpen} user={user} appName="CLICKUP" logo={clickupLogo} title="Create A New Space" description="Uses Clickup Tool to create a new space from connected account" action={createClickupSpace} logoRounded={true} inputRequired={true} inputValue="workspace id" /> */}
           <DemoApp actionDescription="This action will get the basic shop details from connected account" setOpen={setOpen} user={user} appName="SHOPIFY" logo={shopifyLogo} title="Get Shop Details" description="Uses Shopify Tool to retrieve basic shop information from connected account" action={getShopifyDetails} connectViaAPI={true}  />
