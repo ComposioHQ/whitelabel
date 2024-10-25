@@ -44,67 +44,6 @@ class FirebaseService {
 
     return false;
   }
-
-//   async updateTwitterIntegrationId(username, twitterIntegrationId) {
-//     const usersRef = this.db.collection('users');
-//     const query = usersRef.where('username', '==', username).limit(1);
-//     const snapshot = await query.get();
-
-//     if (!snapshot.empty) {
-//       try {
-//         await snapshot.docs[0].ref.update({ twitterIntegrationId });
-//         console.log(`Successfully updated twitterIntegrationId for user ${username}`);
-//         return true;
-//       } catch (e) {
-//         console.error(`Error updating twitterIntegrationId for user ${username}: ${e}`);
-//         return false;
-//       }
-//     }
-
-//     console.log(`User ${username} not found`);
-//     return false;
-//   }
-
-//   async getTwitterIntegrationId(username) {
-//     const usersRef = this.db.collection('users');
-//     const query = usersRef.where('username', '==', username).limit(1);
-//     const snapshot = await query.get();
-
-//     if (!snapshot.empty) {
-//       const userData = snapshot.docs[0].data();
-//       return userData.twitterIntegrationId || '';
-//     }
-
-//     console.log(`User ${username} not found`);
-//     return '';
-//   }
-
-//   async getComposioApiKey(username) {
-//     const usersRef = this.db.collection('users');
-//     const query = usersRef.where('username', '==', username).limit(1);
-//     const snapshot = await query.get();
-
-//     if (!snapshot.empty) {
-//       const userData = snapshot.docs[0].data();
-//       return userData.composio_api_key || '';
-//     }
-
-//     console.log(`User ${username} not found`);
-//     return '';
-//   }
-
-//   async checkComposioApiKey(username) {
-//     const usersRef = this.db.collection('users');
-//     const query = usersRef.where('username', '==', username).limit(1);
-//     const snapshot = await query.get();
-
-//     if (!snapshot.empty) {
-//       const userData = snapshot.docs[0].data();
-//       return !!userData.composio_api_key;
-//     }
-
-//     return false;
-//   }
 }
 
 // Export a singleton instance
