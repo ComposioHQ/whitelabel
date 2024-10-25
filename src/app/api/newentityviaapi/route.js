@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { OpenAIToolSet } from 'composio-core';
-const toolset = new OpenAIToolSet({ apiKey: '' });
+const toolset = new OpenAIToolSet({ apiKey: process.env.COMPOSIO_API_KEY });
 const composio = toolset.client;
 
 const appIntegrationIds = {
