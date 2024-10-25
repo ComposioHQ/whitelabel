@@ -8,6 +8,9 @@ const Navbar = ({ user }) => {
                 <a href="https://github.com/abhishekpatil4/whitelabel" target="_blank" >
                     <button type="button" className="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">Source Code</button>
                 </a>
+                <a href="https://github.com/abhishekpatil4/whitelabel" target="_blank" >
+                    <button type="button" className="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">Python SDK Implementation</button>
+                </a>
                 <a href="https://cal.com/team/composio/composio-white-label" target="_blank" >
                     <button type="button" className="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">Schedule a Call to Discuss More</button>
                 </a>
