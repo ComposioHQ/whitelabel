@@ -4,8 +4,8 @@ import { linkAccount, checkConnectionStatus, linkShopifyAccount } from "../utils
 import ExecuteActionPopup from "./ExecuteActionPopup";
 import { useSnackbar } from 'notistack'
 import ShopifyConnectPopup from "./ShopifyConnectPopup";
-import MoonLoader from "react-spinners/MoonLoader";
 
+import { MoonLoader } from "react-spinners"
 const DemoApp = ({ logo, title, description, user, appName, action, setOpen, logoRounded = false, actionDescription, inputRequired = false, inputValue = "input required", connectViaAPI = false }) => {
     const [isConnected, setIsConnected] = useState(false);
     const [shopifyConnectPopupOpen, setShopifyConnectPopupOpen] = useState(false);
