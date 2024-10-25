@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import { linkShopifyAccount } from '../utils/composio_utils';
 import { MoonLoader } from "react-spinners"
+import axios from 'axios';
 
 // Assume this response comes from an API endpoint
 const response = [
@@ -36,14 +37,24 @@ export default function ShopifyConnectPopup({ open, setOpen, user }) {
     const [formData, setFormData] = useState({});
     const [connecting, setConnecting] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
+    const [expectedParams, setExpectedParams] = useState([]);
 
     useEffect(() => {
-        // Initialize formData with default values
         const initialData = {};
-        response.forEach(field => {
-            initialData[field.name] = field.default || '';
-        });
-        setFormData(initialData);
+        const fetchExpectedParams = async () => {
+            try {
+                const response = await axios.post('/api/expectedparams', { appName: 'SHOPIFY' });
+                setExpectedParams(response.data.expectedInputFields);
+                expectedParams.forEach(field => {
+                    initialData[field.name] = field.default || '';
+                });
+                setFormData(initialData);
+            } catch (error) {
+                console.error('Error fetching expected params:', error);
+                enqueueSnackbar('Failed to fetch connection parameters', { variant: 'error' });
+            }
+        };
+        fetchExpectedParams();
     }, []);
 
     const handleInputChange = (e, fieldName) => {

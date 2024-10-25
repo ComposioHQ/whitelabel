@@ -1,0 +1,58 @@
+[
+  {
+    "actionExecutedMessage": "Composio repo is starred from your github account",
+    "actionDescription": "This action will star the composioHQ/composio repository from connected account",
+    "appName": "GITHUB",
+    "logo": "/assets/appLogos/github-logo.jpg",
+    "title": "Star a repo on Github",
+    "description": "Uses Github Tool to star a repo from connected account. Authenticaton type is OAuth2",
+    "action": "starGithubRepo",
+    "demoApp": true,
+    "disable": false
+  },
+  {
+    "actionExecutedMessage": "Tweet successfully created from your twitter account",
+    "actionDescription": "This action will create a tweet saying 'Hey! I used @composiohq to create this tweet' from connected account.",
+    "appName": "TWITTER",
+    "logo": "/assets/appLogos/twitter-logo.jpg",
+    "title": "Create Simple Tweet App",
+    "description": "Uses Twitter Tool to create a tweet from connected account. Authenticaton type is OAuth2",
+    "action": "createNewTweet",
+    "demoApp": false,
+    "disable": false
+  },
+  {
+    "actionDescription": "This action will get the basic shop details from connected account",
+    "appName": "SHOPIFY",
+    "logo": "/assets/appLogos/shopify-logo.png",
+    "title": "Get Shop Details",
+    "description": "Uses Shopify Tool to retrieve basic shop information from connected account. Authenticaton type is Admin API Key",
+    "action": "getShopifyDetails",
+    "connectViaAPI": true,
+    "demoApp": false,
+    "disable": false
+  },
+  {
+    "actionDescription": "This action will create an issue in Jira from connected account.",
+    "appName": "JIRA",
+    "logo": "/assets/appLogos/jira-logo.jpg",
+    "title": "Create An Issue",
+    "description": "Uses Jira Tool to create an issue from connected account",
+    "action": "createNewTweet",
+    "demoApp": false,
+    "disable": true
+  },
+  {
+    "actionDescription": "This action will create a new space in Clickup from connected account",
+    "appName": "CLICKUP",
+    "logo": "/assets/appLogos/clickup-logo.jpg",
+    "title": "Create A New Space",
+    "description": "Uses Clickup Tool to create a new space from connected account",
+    "action": "createClickupSpace",
+    "logoRounded": true,
+    "inputRequired": true,
+    "inputValue": "workspace id",
+    "demoApp": false,
+    "disable": true
+  }
+]
