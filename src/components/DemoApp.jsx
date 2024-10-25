@@ -117,7 +117,7 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
     }
 
     return (
-        <div id="demo-app-container" className="flex flex-col gap-8 border border-gray-300 rounded-lg p-8 w-[22rem] h-[21rem]">
+        <div id="demo-app-container" className="flex flex-col gap-6 border border-gray-300 rounded-lg p-8 w-[22rem] h-[21rem]">
             {
                 connectViaAPI && <ShopifyConnectPopup open={shopifyConnectPopupOpen} setOpen={setShopifyConnectPopupOpen} user={user} />
             }
@@ -137,14 +137,14 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
             </div>
             <div className="text-center">
                 <p className="text-xl font-bold">{title}</p>
-                <p className="text-sm text-gray-500">{description}</p>
+                <p className="text-sm text-gray-500 pt-1">{description}</p>
             </div>
             <div className="mx-auto w-full">
                 {!isConnected ? (
                     <button
                         id={demoApp ? "connect-accounts-button" : ""}
                         type="button"
-                        className="flex mx-auto justify-center items-center focus:outline-none text-white w-full bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 h-[2.5rem]"
+                        className="flex mx-auto justify-center items-center focus:outline-none text-white w-full bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 h-[2.5rem]"
                         onClick={connectViaAPI ? () => setShopifyConnectPopupOpen(true) : handleConnect}
                     >
                         {connecting ? <MoonLoader color={"#ffffff"} loading={true} size={16} /> : "Connect"}
@@ -153,7 +153,7 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
                     <button
                         id={demoApp ? "execute-action-button" : ""} 
                         type="button"
-                        className="focus:outline-none text-white w-full bg-green-600 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 h-[2.5rem]"
+                        className="focus:outline-none text-white w-full bg-green-600 hover:bg-green-800 font-medium rounded-lg text-sm px-5 h-[2.5rem]"
                         onClick={() => setExecuteActionPopupOpen(true)}
                     >
                         {/* {actionExecuting ? <MoonLoader color={"#ffffff"} loading={true} size={16} /> : "Perform Action"} */}
