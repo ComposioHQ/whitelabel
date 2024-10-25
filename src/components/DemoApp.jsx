@@ -154,7 +154,7 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
                         id={demoApp ? "connect-accounts-button" : ""}
                         type="button"
                         className="flex mx-auto justify-center items-center focus:outline-none text-white w-full bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 h-[2.5rem]"
-                        onClick={connectViaAPI ? () => handleConnectViaAPI() : handleConnect}
+                        onClick={connectViaAPI ?  handleConnectViaAPI : handleConnect}
                     >
                         {connecting ? <MoonLoader color={"#ffffff"} loading={true} size={16} /> : "Connect"}
                     </button>
