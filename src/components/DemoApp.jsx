@@ -12,7 +12,7 @@ import { driver } from "driver.js";
 import 'driver.js/dist/driver.css'
 
 
-const DemoApp = ({ logo, title, description, user, appName, action, setOpen, logoRounded = false, actionDescription, inputRequired = false, inputValue = "input required", connectViaAPI = false, demoApp = false }) => {
+const DemoApp = ({ logo, title, description, user, appName, action, setOpen, logoRounded = false, actionDescription, inputRequired = false, inputValue = "input required", connectViaAPI = false, demoApp = false, actionExecutedMessage="" }) => {
     const [isConnected, setIsConnected] = useState(false);
     const [handleDriverDemoLoggedOut, setHandleDriverDemoLoggedOut] = useState(null);
     const [shopifyConnectPopupOpen, setShopifyConnectPopupOpen] = useState(false);
@@ -81,7 +81,7 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
                 setActionExecuting(true);
                 if (appName === "SHOPIFY") {
                     const response = await action(user.email.split("@")[0])
-                    enqueueSnackbar(response, { variant: "success" });
+                    enqueueSnackbar(response, { variant: "default" });
                 } else {
                     await action(user.email.split("@")[0])
                 }
@@ -91,7 +91,6 @@ const DemoApp = ({ logo, title, description, user, appName, action, setOpen, log
             } finally {
                 setActionExecuting(false);
                 setExecuteActionPopupOpen(false);
-                enqueueSnackbar("Action executed successfully", { variant: "success" });
             }
         } else {
             setOpen(true);
