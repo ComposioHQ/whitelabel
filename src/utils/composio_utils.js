@@ -27,32 +27,24 @@ const linkAccount = async (user, appName) => {
     }
 }
 
-const linkShopifyAccount = async (user, admin_api_access_token, shopSubDomain, appName) => {
+const linkShopifyAccount = async (accountData) => {
     try {
         const idToken = await auth.currentUser.getIdToken(true);
-        const data = {
-            newUserId: user,
-            admin_api_access_token: admin_api_access_token,
-            shopSubDomain: shopSubDomain,
-            appName: appName
-        };
-        const newEntityURL = "/api/newentityviaapi"
-        const response = await axios.post(newEntityURL, data, {
-            headers: {
-                'Authorization': `Bearer ${idToken}`,
-                'Content-Type': 'application/json'
+        const response = await axios.post("/api/newentityviaapi",
+            accountData,
+            {
+                headers: {
+                    Authorization: `Bearer ${idToken}`,
+                    'Content-Type': 'application/json'
+                },
             }
-        });
-        if (response.data.authenticated === true) {
-            return true;
-        } else if (response.data.authenticated === false) {
-            return false;
-        }
+        );
+        return response.data.authenticated;
     } catch (error) {
-        console.error("Full error object:", error);
-        console.log("\n\nError :: ", error)
+        console.error("Error linking Shopify account:", error);
+        throw error;
     }
-}   
+};
 
 const checkConnectionStatus = async (appName, setIsConnected, entityId) => {
     try {
@@ -163,5 +155,12 @@ const getShopifyDetails = async (entityId) => {
     }
 };
 
-
-export { checkConnectionStatus, linkAccount, createNewTweet, starGithubRepo, createClickupSpace, linkShopifyAccount, getShopifyDetails };
+export { 
+    checkConnectionStatus, 
+    linkAccount, 
+    createNewTweet, 
+    starGithubRepo, 
+    createClickupSpace, 
+    linkShopifyAccount, 
+    getShopifyDetails 
+};

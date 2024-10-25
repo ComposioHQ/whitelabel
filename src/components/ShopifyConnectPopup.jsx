@@ -4,26 +4,87 @@ import { useSnackbar } from 'notistack';
 import { linkShopifyAccount } from '../utils/composio_utils';
 import { MoonLoader } from "react-spinners"
 
+// Assume this response comes from an API endpoint
+const response = [
+    {
+        "name": "admin_api_access_token",
+        "type": "string",
+        "description": "Your Admin api acess token for authentication which can be generated from your Shopify app settings. Create a Shopify app and configure the required scopes. You can access your app settings and generate the token by visiting https://admin.shopify.com/store/<store-name>/settings/apps/development",
+        "display_name": "Admin Api Access Token",
+        "default": null,
+        "required": true,
+        "get_current_user_endpoint": null,
+        "expected_from_customer": true,
+        "is_secret": false,
+        "displayName": "Admin Api Access Token"
+    },
+    {
+        "name": "shop",
+        "type": "string",
+        "description": "Your Shopify store's subdomain (e.g., your-store-name in your-store-name.myshopify.com)",
+        "display_name": "Store Subdomain",
+        "default": null,
+        "required": true,
+        "get_current_user_endpoint": null,
+        "expected_from_customer": true,
+        "is_secret": false,
+        "displayName": "Store Subdomain"
+    }
+]
+
 export default function ShopifyConnectPopup({ open, setOpen, user }) {
-    const [admin_api_access_token, setAdminApiAccessToken] = useState("");
-    const [shopify_domain, setShopifyDomain] = useState("");
+    const [formData, setFormData] = useState({});
     const [connecting, setConnecting] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
+
+    useEffect(() => {
+        // Initialize formData with default values
+        const initialData = {};
+        response.forEach(field => {
+            initialData[field.name] = field.default || '';
+        });
+        setFormData(initialData);
+    }, []);
+
+    const handleInputChange = (e, fieldName) => {
+        setFormData(prevData => ({
+            ...prevData,
+            [fieldName]: e.target.value
+        }));
+    };
+
     const handleConnect = async () => {
         setConnecting(true);
-        if (admin_api_access_token === "" || shopify_domain === "") {
-            enqueueSnackbar("Please enter all the details", { variant: "error" });
+        const missingFields = response.filter(field => field.required && !formData[field.name]);
+        if (missingFields.length > 0) {
+            enqueueSnackbar("Please fill in all required fields", { variant: "error" });
+            setConnecting(false);
             return;
         }
-        const response = await linkShopifyAccount(user.email.split("@")[0], admin_api_access_token, shopify_domain, "SHOPIFY");
-        if (response === true) {    
-            enqueueSnackbar("Account connected successfully", { variant: "success" });
-        } else {
-            enqueueSnackbar("Failed to connect account", { variant: "error" });
+
+        // Create a dynamic object for linkShopifyAccount
+        const accountData = {
+            entityId: user && user.email.split("@")[0],
+            appName: "SHOPIFY",
+            ...formData
+        };
+
+        try {
+            const result = await linkShopifyAccount(accountData);
+            if (result === true) {    
+                enqueueSnackbar("Account connected successfully", { variant: "success" });
+                setOpen(false);
+            } else {
+                enqueueSnackbar("Failed to connect account", { variant: "error" });
+            }
+        } catch (error) {
+            console.error("Error connecting account:", error);
+            enqueueSnackbar("An error occurred while connecting the account", { variant: "error" });
+        } finally {
+            setConnecting(false);
         }
-        setOpen(false);
-        setConnecting(false);
     }
+
     return (
         <Dialog open={open} onClose={setOpen} className="relative z-20">
             <DialogBackdrop
@@ -41,37 +102,38 @@ export default function ShopifyConnectPopup({ open, setOpen, user }) {
                                     Enter Details
                                 </DialogTitle>
                                 <Description className="my-6">
-                                    Enter the Shopify admin API access token and domain to connect your Shopify store to Slack.
+                                    Enter the required information to connect your Shopify store.
                                 </Description>
                             </div>
                         </div>
                         <div className="flex flex-col gap-4">
-                            <div>
-                                <input
-                                    className={`h-[2.5rem] block w-full ml-auto rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 py-1.5 px-3 focus:outline-none`}
-                                    placeholder="Shopify Admin API Access Token"
-                                    onChange={(e) => {
-                                        setAdminApiAccessToken(e.target.value);
-                                    }}
-                                    autoComplete="off"
-                                ></input>
-                            </div>
-                            <div>
-                                <input
-                                    className={`h-[2.5rem] block w-full ml-auto rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 py-1.5 px-3 focus:outline-none`}
-                                    placeholder="Shopify Domain"
-                                    onChange={(e) => {
-                                        setShopifyDomain(e.target.value);
-                                    }}
-                                    autoComplete="off"
-                                ></input>
-                            </div>
+                            {response.map((field) => (
+                                <div key={field.name}>
+                                    <label htmlFor={field.name} className="block text-sm font-medium text-gray-700 mb-1">
+                                        {field.display_name}
+                                        {field.required && <span className="text-red-500">*</span>}
+                                    </label>
+                                    <input
+                                        id={field.name}
+                                        type={field.is_secret ? "password" : "text"}
+                                        className="h-[2.5rem] block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 py-1.5 px-3 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                                        placeholder={field.display_name}
+                                        value={formData[field.name] || ''}
+                                        onChange={(e) => handleInputChange(e, field.name)}
+                                        required={field.required}
+                                        autoComplete={field.is_secret ? "off" : "on"}
+                                    />
+                                    {field.description && (
+                                        <p className="mt-1 text-sm text-gray-500">{field.description}</p>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                         <div className="mt-5 sm:mt-6 flex justify-center gap-4">
                             <button
                                 type="button"
                                 onClick={() => setOpen(false)}
-                                className="inline-flex justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-gray-200 text-white-400"
+                                className="inline-flex justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-gray-200 text-gray-700 hover:bg-gray-300"
                             >
                                 Cancel
                             </button>

@@ -12,21 +12,37 @@ const appIntegrationIds = {
 };
 
 export async function POST(request) {
-    const { newUserId, admin_api_access_token, shopSubDomain, appName } = await request.json();
+    const requestData = await request.json();
+    const { entityId, appName, ...formData } = requestData;
+
     try {
-        const connectedAccount = await composio.connectedAccounts.initiate({
-            integrationId: appIntegrationIds[appName],
-            userUuid: newUserId,
-            data:{
-                "admin_api_access_token": admin_api_access_token,
-                "shop": shopSubDomain
+        const integrationId = appIntegrationIds[appName];
+        if (!integrationId) {
+            throw new Error(`Invalid app name: ${appName}`);
+        }
+
+        const expectedInputFieldsResponse = await toolset.getExpectedParamsForUser({ integrationId });
+        const expectedInputFields = expectedInputFieldsResponse.expectedInputFields;
+
+        const data = {};
+        for (const field of expectedInputFields) {
+            if (formData[field.name]) {
+                data[field.name] = formData[field.name];
+            } else if (field.required) {
+                throw new Error(`Missing required field: ${field.name}`);
             }
+        }
+        const connectedAccount = await composio.connectedAccounts.initiate({
+            integrationId,
+            userUuid: entityId,
+            data: data
         });
+        console.log("connectedAccount :: ", connectedAccount);
         return NextResponse.json({
             authenticated: connectedAccount.connectionStatus === "ACTIVE" ? true : false,
         }, { status: 200});
     } catch (error) {
         console.error('Error:', error);
-        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+        return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
     }
 }
