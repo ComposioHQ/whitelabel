@@ -8,7 +8,6 @@ const DemoApp = dynamic(() => import('../components/DemoApp'), { ssr: true })
 const LoginAlert = dynamic(() => import('../components/LoginAlert'), { ssr: false })
 
 import { SnackbarProvider, useSnackbar } from 'notistack'
-import DemoAppRequest from "../components/DemoAppRequest";
 import TWITTER_LOGO from "../assets/appLogos/twitter-logo.jpg";
 import GITHUB_LOGO from "../assets/appLogos/github-logo.jpg";
 import JIRA_LOGO from "../assets/appLogos/jira-logo.jpg";
@@ -86,6 +85,7 @@ export default function Home() {
 
   return (
     <SnackbarProvider maxSnack={3} id="main-container">
+      <ResponsiveMessage />
       <Navbar user={user} />
       <div className="h-screen">
         <LoginAlert open={open} setOpen={setOpen} action={initiateLogin} />
