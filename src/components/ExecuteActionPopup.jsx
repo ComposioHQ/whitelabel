@@ -1,7 +1,7 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Description } from '@headlessui/react'
 import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
-import MoonLoader from "react-spinners/MoonLoader";
+import { MoonLoader } from "react-spinners"
 
 export default function ExecuteActionPopup({ open, setOpen, action, actionDescription, actionExecuting, inputRequired, inputValue }) {
     const [value, setValue] = useState("");
