@@ -2,7 +2,7 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Description } from '@
 import { useState, useEffect } from 'react';
 import { useSnackbar } from 'notistack';
 import { linkShopifyAccount } from '../utils/composio_utils';
-import MoonLoader from "react-spinners/MoonLoader";
+import { MoonLoader } from "react-spinners"
 
 export default function ShopifyConnectPopup({ open, setOpen, user }) {
     const [admin_api_access_token, setAdminApiAccessToken] = useState("");
