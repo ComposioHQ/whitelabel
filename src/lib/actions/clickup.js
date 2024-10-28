@@ -20,11 +20,7 @@ export async function createClickUpSpace(entityId, workspace_id) {
             input: `Create a new space in ClickUp workspace with ID ${workspace_id}. The space name should be 'New_Workspace_Created_by_Composio'. Set multiple Assignees as false.`
         });
         console.log("result ::", result);
-        if (result.output) {
-            return { status: 200, message: result.output };
-        } else {
-            return { status: 204, message: "Space created, but no specific output returned" };
-        }
+        return { status: 204, message: "Space created, but no specific output returned" };
     } catch (error) {
         console.error("Error in createClickUpSpace:", error);
         return { status: 500, message: "Internal server error", error: error.message };
