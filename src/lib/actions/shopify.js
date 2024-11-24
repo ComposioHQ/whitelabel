@@ -7,7 +7,7 @@ export async function getShopDetails(entityId) {
     const llm = new ChatOpenAI({ model: "gpt-4o-mini" });
     const composioToolset = new LangchainToolSet({ apiKey: process.env.COMPOSIO_API_KEY, entityId: entityId });
     const prompt = await pull("hwchase17/openai-functions-agent");
-    const tools = await composioToolset.getActions({ actions: ["SHOPIFY_GET_SHOP_DETAILS"] });
+    const tools = await composioToolset.getTools({ actions: ["SHOPIFY_GET_SHOP_DETAILS"] });
     
     try {
         const agent = await createOpenAIFunctionsAgent({

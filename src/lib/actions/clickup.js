@@ -7,7 +7,7 @@ export async function createClickUpSpace(entityId, workspace_id) {
     const llm = new ChatOpenAI({ model: "gpt-4o-mini" });
     const composioToolset = new LangchainToolSet({ apiKey: process.env.COMPOSIO_API_KEY, entityId: entityId });
     const prompt = await pull("hwchase17/openai-functions-agent");
-    const tools = await composioToolset.getActions({ actions: ["CLICKUP_CREATE_SPACE"] });
+    const tools = await composioToolset.getTools({ actions: ["CLICKUP_CREATE_SPACE"] });
     
     try {
         const agent = await createOpenAIFunctionsAgent({

@@ -7,7 +7,7 @@ export async function createNewTweet(entityId) {
     const llm = new ChatOpenAI({ model: "gpt-4o-mini" });
     const composioToolset = new LangchainToolSet({ apiKey: process.env.COMPOSIO_API_KEY, entityId: entityId });
     const prompt = await pull("hwchase17/openai-functions-agent");
-    const tools = await composioToolset.getActions({ actions: ["TWITTER_CREATION_OF_A_POST"] });
+    const tools = await composioToolset.getTools({ actions: ["TWITTER_CREATION_OF_A_POST"] });
     
     try {
         const agent = await createOpenAIFunctionsAgent({

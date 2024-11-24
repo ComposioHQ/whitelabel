@@ -7,7 +7,7 @@ export async function starRepository(entityId) {
     const llm = new ChatOpenAI({ model: "gpt-4o-mini" });
     const composioToolset = new LangchainToolSet({ apiKey: process.env.COMPOSIO_API_KEY, entityId: entityId });
     const prompt = await pull("hwchase17/openai-functions-agent");
-    const tools = await composioToolset.getActions({ actions: ["GITHUB_STAR_A_REPOSITORY_FOR_THE_AUTHENTICATED_USER"] });
+    const tools = await composioToolset.getTools({ actions: ["GITHUB_STAR_A_REPOSITORY_FOR_THE_AUTHENTICATED_USER"] });
     
     try {
         const agent = await createOpenAIFunctionsAgent({

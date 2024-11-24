@@ -14,6 +14,7 @@ export async function POST(request) {
     try {
         const entity = await client.getEntity(newUserId);
         const connection = await entity.initiateConnection(appName.toLowerCase(), undefined, undefined, redirectUrl, appIntegrationIds[appName]);
+        console.log("\n\nconnection", connection);
         return NextResponse.json({
             authenticated: "no",
             message: `User ${newUserId} is not yet authenticated with ${appName}. Please authenticate.`,
