@@ -15,7 +15,12 @@ Clone the repo
 git clone https://github.com/ComposioHQ/whitelabel.git
 ```
 
+Install the dependencies
+```bash
+cd whitelabel && npm i 
+```
+
 Run the server
 ```bash
-cd whitelabel && npm run dev
+npm run dev
 ```
