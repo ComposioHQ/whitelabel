@@ -20,19 +20,19 @@ export async function POST(request) {
 
 async function checkConnection(appName, entityId) {
     try {
-        const client = new Composio(process.env.COMPOSIO_API_KEY);
+        const client = new Composio({ apiKey: process.env.COMPOSIO_API_KEY });
         const entity = await client.getEntity(entityId);
         if (!entity) {
             console.error(`Entity not found for entityId: ${entityId}`);
             return false;
         }
-        const connectedAccounts = await entity.getConnection(appName.toLowerCase());
-        if (!connectedAccounts) {
+        try {
+            const connectedAccounts = await entity.getConnection({ appName: appName.toLowerCase() });
+        } catch (error) {
             return false;
         }
         return true;
     } catch (error) {
-        console.error('Error in checkConnection:', error);
         return false;
     }
 }

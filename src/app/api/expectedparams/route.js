@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { OpenAIToolSet } from 'composio-core';
-const toolset = new OpenAIToolSet({ apiKey: process.env.COMPOSIO_API_KEY });
+import { ComposioToolSet } from 'composio-core';
+const toolset = new ComposioToolSet({ apiKey: process.env.COMPOSIO_API_KEY });
 
 const appIntegrationIds = {
     "TWITTER": process.env.TWITTER_INTEGRATION_ID,
@@ -19,9 +19,7 @@ export async function POST(request) {
         if (!integrationId) {
             throw new Error(`Invalid app name: ${appName}`);
         }
-
-        const expectedInputFieldsResponse = await toolset.getExpectedParamsForUser({ integrationId });
-        const expectedInputFields = expectedInputFieldsResponse.expectedInputFields;
+        const expectedInputFields = await toolset.integrations.getRequiredParams(integrationId);
 
         return NextResponse.json({
             expectedInputFields
