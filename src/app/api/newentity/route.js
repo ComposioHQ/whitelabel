@@ -13,8 +13,7 @@ export async function POST(request) {
     const client = new Composio(process.env.COMPOSIO_API_KEY);
     try {
         const entity = await client.getEntity(newUserId);
-        const connection = await entity.initiateConnection(appName.toLowerCase(), undefined, undefined, redirectUrl, appIntegrationIds[appName]);
-        console.log("\n\nconnection", connection);
+        const connection = await entity.initiateConnection({ appName: appName.toLowerCase(), redirectUri: redirectUrl, integrationId: appIntegrationIds[appName] });
         return NextResponse.json({
             authenticated: "no",
             message: `User ${newUserId} is not yet authenticated with ${appName}. Please authenticate.`,
