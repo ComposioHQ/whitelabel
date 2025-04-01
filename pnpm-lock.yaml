@@ -30,8 +30,8 @@ importers:
         specifier: ^1.7.7
         version: 1.7.9
       composio-core:
-        specifier: ^0.5.3
-        version: 0.5.3(@ai-sdk/openai@0.0.36(zod@3.24.1))(@cloudflare/workers-types@4.20250109.0)(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1)))(@langchain/openai@0.3.17(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1))))(ai@3.4.33(openai@4.78.1(zod@3.24.1))(react@18.3.1)(sswr@2.1.0(svelte@5.17.3))(svelte@5.17.3)(vue@3.5.13(typescript@5.7.3))(zod@3.24.1))(langchain@0.3.11(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1)))(axios@1.7.9)(openai@4.78.1(zod@3.24.1)))(openai@4.78.1(zod@3.24.1))
+        specifier: ^0.5.29
+        version: 0.5.29(@ai-sdk/openai@0.0.36(zod@3.24.1))(@cloudflare/workers-types@4.20250109.0)(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1)))(@langchain/openai@0.3.17(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1))))(ai@3.4.33(openai@4.78.1(zod@3.24.1))(react@18.3.1)(sswr@2.1.0(svelte@5.17.3))(svelte@5.17.3)(vue@3.5.13(typescript@5.7.3))(zod@3.24.1))(langchain@0.3.11(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1)))(axios@1.7.9)(openai@4.78.1(zod@3.24.1)))(openai@4.78.1(zod@3.24.1))
       dotenv:
         specifier: ^16.4.5
         version: 16.4.7
@@ -229,7 +229,7 @@ packages:
       '@playwright/test': ^1.42.1
       deepmerge: ^4.3.1
       dotenv: ^16.4.5
-      openai: ^4.62.1
+      openai: 4.82.0
       zod: ^3.23.8
 
   '@cfworker/json-schema@4.1.0':
@@ -237,6 +237,10 @@ packages:
 
   '@cloudflare/workers-types@4.20250109.0':
     resolution: {integrity: sha512-Y1zgSaEOOevl9ORpzgMcm4j535p3nK2lrblHHvYM2yxR50SBKGh+wvkRFAIxWRfjUGZEU+Fp6923EGioDBbobA==}
+
+  '@composio/mcp@1.0.3-0':
+    resolution: {integrity: sha512-IpbfST0SSs/CEv+PIf6+EL0feNuJhQyUrOHJLPge8NhyLLrCyVqvujRIPyRUUjy0NDsked/Mm5VpJmYM6OACbg==}
+    hasBin: true
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -2511,17 +2515,17 @@ packages:
     resolution: {integrity: sha512-8bW8vzd0YdwjBTbbHmUV3fb1jGFlczUEwti3dbdogI+r/igv2yyLqZFh9IyQv4+gK3k1kdNGVrf6Af5BY8qB3Q==}
     engines: {node: '>=4.0'}
 
-  composio-core@0.5.3:
-    resolution: {integrity: sha512-WTHdUOwnnt1Vm2SHOpmU06EHFhhkJe85x/blgKvmfI/6KGsI6daUACPMiwz5piMZX5HgrmwxeqfBialPhj6Bvw==}
+  composio-core@0.5.29:
+    resolution: {integrity: sha512-Lh8R9dK2OnTs70RjUA0AQ04Fr6MDuyfGuKu+tjVqRGNXMkjJh9H9KQp+Vn/11oVrf7UY1zMQ0iRj2scF+dAzSg==}
     hasBin: true
     peerDependencies:
-      '@ai-sdk/openai': ^0.0.36
-      '@cloudflare/workers-types': ^4.20240718.0
-      '@langchain/core': ^0.2.18
-      '@langchain/openai': ^0.2.5
-      ai: ^3.2.22
-      langchain: ^0.2.11
-      openai: ^4.50.0
+      '@ai-sdk/openai': '>=0.0.36'
+      '@cloudflare/workers-types': '>=4.20240718.0'
+      '@langchain/core': '>=0.2.18'
+      '@langchain/openai': '>=0.2.5'
+      ai: '>=3.2.22'
+      langchain: '>=0.2.11'
+      openai: '>=4.50.0'
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -4748,6 +4752,14 @@ packages:
   path-parse@1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
 
+  path-root-regex@0.1.2:
+    resolution: {integrity: sha512-4GlJ6rZDhQZFE0DPVKh0e9jmZ5egZfxTkp7bcRDuPlJXbAwhxcl2dINPUAsjLdejqaLsCeg8axcLjIbvBjN4pQ==}
+    engines: {node: '>=0.10.0'}
+
+  path-root@0.1.1:
+    resolution: {integrity: sha512-QLcPegTHF11axjfojBIoDygmS2E3Lf+8+jI6wOVmNVenrKSo3mFdSGiIgdSHenczw3wPtlVMQaFVwGmM7BJdtg==}
+    engines: {node: '>=0.10.0'}
+
   path-scurry@1.11.1:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
@@ -5097,6 +5109,10 @@ packages:
   resolve-glob@1.0.0:
     resolution: {integrity: sha512-wSW9pVGJRs89k0wEXhM7C6+va9998NsDhgc0Y+6Nv8hrHsu0hUS7Ug10J1EiVtU6N2tKlSNvx9wLihL8Ao22Lg==}
     engines: {node: '>=0.10.0'}
+
+  resolve-package-path@4.0.3:
+    resolution: {integrity: sha512-SRpNAPW4kewOaNUt8VPqhJ0UMxawMwzJD8V7m1cJfdSTK9ieZwS6K7Dabsm4bmLFM96Z5Y/UznrpG5kt1im8yA==}
+    engines: {node: '>= 12'}
 
   resolve-pkg-maps@1.0.0:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
@@ -6168,6 +6184,8 @@ snapshots:
   '@cfworker/json-schema@4.1.0': {}
 
   '@cloudflare/workers-types@4.20250109.0': {}
+
+  '@composio/mcp@1.0.3-0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -8737,10 +8755,11 @@ snapshots:
       micromatch: 2.3.11
       nanoseconds: 0.1.0
 
-  composio-core@0.5.3(@ai-sdk/openai@0.0.36(zod@3.24.1))(@cloudflare/workers-types@4.20250109.0)(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1)))(@langchain/openai@0.3.17(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1))))(ai@3.4.33(openai@4.78.1(zod@3.24.1))(react@18.3.1)(sswr@2.1.0(svelte@5.17.3))(svelte@5.17.3)(vue@3.5.13(typescript@5.7.3))(zod@3.24.1))(langchain@0.3.11(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1)))(axios@1.7.9)(openai@4.78.1(zod@3.24.1)))(openai@4.78.1(zod@3.24.1)):
+  composio-core@0.5.29(@ai-sdk/openai@0.0.36(zod@3.24.1))(@cloudflare/workers-types@4.20250109.0)(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1)))(@langchain/openai@0.3.17(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1))))(ai@3.4.33(openai@4.78.1(zod@3.24.1))(react@18.3.1)(sswr@2.1.0(svelte@5.17.3))(svelte@5.17.3)(vue@3.5.13(typescript@5.7.3))(zod@3.24.1))(langchain@0.3.11(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1)))(axios@1.7.9)(openai@4.78.1(zod@3.24.1)))(openai@4.78.1(zod@3.24.1)):
     dependencies:
       '@ai-sdk/openai': 0.0.36(zod@3.24.1)
       '@cloudflare/workers-types': 4.20250109.0
+      '@composio/mcp': 1.0.3-0
       '@hey-api/client-axios': 0.2.12(axios@1.7.9)
       '@langchain/core': 0.3.29(openai@4.78.1(zod@3.24.1))
       '@langchain/openai': 0.3.17(@langchain/core@0.3.29(openai@4.78.1(zod@3.24.1)))
@@ -8754,6 +8773,7 @@ snapshots:
       open: 8.4.2
       openai: 4.78.1(zod@3.24.1)
       pusher-js: 8.4.0-rc2
+      resolve-package-path: 4.0.3
       uuid: 10.0.0
       zod: 3.24.1
       zod-to-json-schema: 3.24.1(zod@3.24.1)
@@ -11461,6 +11481,12 @@ snapshots:
 
   path-parse@1.0.7: {}
 
+  path-root-regex@0.1.2: {}
+
+  path-root@0.1.1:
+    dependencies:
+      path-root-regex: 0.1.2
+
   path-scurry@1.11.1:
     dependencies:
       lru-cache: 10.4.3
@@ -11891,6 +11917,10 @@ snapshots:
       matched: 1.0.2
       relative: 3.0.2
       resolve-dir: 1.0.1
+
+  resolve-package-path@4.0.3:
+    dependencies:
+      path-root: 0.1.1
 
   resolve-pkg-maps@1.0.0: {}
 

@@ -5,8 +5,6 @@ const toolset = new ComposioToolSet({ apiKey: process.env.COMPOSIO_API_KEY });
 const appIntegrationIds = {
     "TWITTER": process.env.TWITTER_INTEGRATION_ID,
     "GITHUB": process.env.GITHUB_INTEGRATION_ID,
-    "JIRA": process.env.JIRA_INTEGRATION_ID,
-    "CLICKUP": process.env.CLICKUP_INTEGRATION_ID,
     "SHOPIFY": process.env.SHOPIFY_INTEGRATION_ID
 };
 
@@ -19,7 +17,7 @@ export async function POST(request) {
         if (!integrationId) {
             throw new Error(`Invalid app name: ${appName}`);
         }
-        const expectedInputFields = await toolset.integrations.getRequiredParams(integrationId);
+        const expectedInputFields = await toolset.integrations.getRequiredParams({ integrationId });
 
         return NextResponse.json({
             expectedInputFields
